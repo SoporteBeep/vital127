@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vital 127 - Menú Completo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #15110d;
+      --panel: rgba(24, 18, 13, 0.82);
+      --panel-2: rgba(13, 10, 7, 0.88);
+      --line: rgba(212, 163, 115, 0.35);
+      --gold: #d4a373;
+      --gold-2: #ffd166;
+      --text: #f5e6c8;
+      --muted: #d8c4a7;
+      --shadow: 0 10px 30px rgba(0,0,0,0.28);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(16,11,8,0.90), rgba(16,11,8,0.94)),
+        url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 10px 0 12px;
+    }
+
+    .header img {
+      width: 210px;
+      max-width: 70vw;
+      display: block;
+      margin: 0 auto 8px;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.22));
+    }
+
+    .header h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 38px);
+      letter-spacing: 2px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: var(--gold);
+      letter-spacing: 3px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(7, 5, 3, 0.82);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+    }
+
+    .nav button {
+      appearance: none;
+      border: 1px solid rgba(212, 163, 115, 0.45);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 14px 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .nav button:hover,
+    .nav button.active-btn {
+      background: rgba(212, 163, 115, 0.14);
+      border-color: rgba(255, 209, 102, 0.7);
+      color: #fff7e6;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.78);
+    }
+
+    .hero-text {
+      padding: 18px 18px 16px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.22));
+    }
+
+    .hero h2 {
+      margin: 0 0 6px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 34px);
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: #fff4da;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    .section-subtitle {
+      margin: 18px 0 10px;
+      color: var(--gold-2);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+    }
+
+    .menu-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(212, 163, 115, 0.16);
+    }
+
+    .item:last-child { border-bottom: 0; }
+
+    .name {
+      flex: 1;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .price {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff0cf;
+      white-space: nowrap;
+    }
+
+    .pager {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .pager button {
+      appearance: none;
+      border: 1px solid rgba(212, 163, 115, 0.45);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .pager button:hover {
+      background: rgba(212, 163, 115, 0.14);
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 860px) {
+      .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding-inline: 12px; }
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px;
+      }
+      .nav button {
+        font-size: 14px;
+        padding: 14px 10px;
+      }
+      .hero img { height: 148px; }
+      .card { padding: 16px 14px; }
+      .section-title { font-size: 22px; }
+      .name, .price { font-size: 13.5px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <img src="logo_vital127_cropped.png" alt="Vital 127">
+    </header>
+
+    <nav class="nav">
+      <button class="active-btn" onclick="showPage(1, this)">☕ Calientes</button>
+      <button onclick="showPage(2, this)">🧊 Frías</button>
+      <button onclick="showPage(3, this)">💪 Proteína</button>
+      <button onclick="showPage(4, this)">🥐 Pastelería</button>
+      <button onclick="showPage(5, this)">🍰 Tortas</button>
+      <button onclick="showPage(6, this)">📋 Todo el menú</button>
+    </nav>
+
+    <section class="page active" id="page1">
+      <div class="hero">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80" alt="Bebidas calientes">
+        <div class="hero-text">
+          <h2>☕ Bebidas calientes</h2>
+          <p>Primero los filtrados y las bebidas de mayor valor, seguidas por los cappuccinos saborizados, cafés clásicos, tés y bebidas especiales.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Filtrados y café de especialidad</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">340gALEGRIAS</span><span class="price">$50.000</span></div>
+          <div class="item"><span class="name">500G ALEGRIAS</span><span class="price">$60.000</span></div>
+          <div class="item"><span class="name">CAFE DE LA CASA 500grs</span><span class="price">$50.000</span></div>
+          <div class="item"><span class="name">FILTRADO SUPER EXÓTICO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">PALOMA RIVERA</span><span class="price">$65.000</span></div>
+          <div class="item"><span class="name">SUPER EXÓTICO TABI O BORBON</span><span class="price">$60.000</span></div>
+          <div class="item"><span class="name">TAZA DOBLE PARED und</span><span class="price">$30.000</span></div>
+        </div>
+
+        <div class="section-subtitle">Cappuccinos saborizados y especiales</div>
+        <div class="menu-list">
+          <div class="item"><span class="name">CAPPUCCINO CON PISTACHO</span><span class="price">$14.000</span></div>
+          <div class="item"><span class="name">CAPUCHINO ALMENDRA</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">CAPUCHINO AVELLANA</span><span class="price">$14.000</span></div>
+          <div class="item"><span class="name">CAPUCHINO BAYLYS Y AMARETO</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">CAPUCHINO CAMPESINO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">CAPUCHINO CARAMELO SALADO</span><span class="price">$14.000</span></div>
+          <div class="item"><span class="name">CAPUCHINO ITALIANO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">CPUCH VAN AREQ CARA</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">pistacho</span><span class="price">$14.000</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Cafés clásicos y calientes</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">AGUA DE PANELA</span><span class="price">$6.000</span></div>
+          <div class="item"><span class="name">AMERICANO</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">AMERICANO DOBLE</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">AROMÁTICA</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">CAMPESINO</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">CAPPUCCINO</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">CHAI EN ALMENDRAS</span><span class="price">$9.000</span></div>
+          <div class="item"><span class="name">CHOCOLATE</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">ESPRESSO DOBLE</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">EXPRESO SENCILLO</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">FLAT WHAIT</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">LATTE</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">MACCCHIATO</span><span class="price">$9.000</span></div>
+          <div class="item"><span class="name">MATCHA ALMENDRAS</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">MATCHA EN AGUA</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">MATCHA LATE</span><span class="price">$9.000</span></div>
+          <div class="item"><span class="name">MILO CALIENTE</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">MOCACHINO</span><span class="price">$9.000</span></div>
+          <div class="item"><span class="name">TE CHAI AGUA</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">TE CHAI LECHE</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">TE ROOIBOS LAVANDA</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">TE ROOIBOS VAINILLA</span><span class="price">$7.000</span></div>
+        </div>
+
+        <div class="section-subtitle">Combos calientes y especiales</div>
+        <div class="menu-list">
+          <div class="item"><span class="name">AMERICANO Y POSTRE</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">AMERICANO Y POSTRE 12K</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">COMBO AGUA PANELA CON QUESO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">COMBO AGUA PANELA CON QUESO</span><span class="price">$10.000</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page2">
+      <div class="hero">
+        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1400&q=80" alt="Bebidas frías">
+        <div class="hero-text">
+          <h2>🧊 Bebidas frías</h2>
+          <p>Frappés, jugos, bebidas embotelladas, energéticas y opciones listas para llevar, todo concentrado en una sola sección.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Frías de barra</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">"c CARAMEL ICE MACCCHIATO"</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">COOKIES ICE CREAM</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">GRANISADOS MOCCA</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">JUGO LECHE</span><span class="price">$9.000</span></div>
+          <div class="item"><span class="name">JUGO NATURAL EN AGUA</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">LATTE FRIO</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">LATTE FRIO EN ALMENDRAS</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">LATTE FRIO O MOCCA FRIO</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">LIMONADA BRASILERA</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">MILO FRIO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">SODAS ITALIANAS FRUTOS AMARILLOS Y FRUTOS ROJOS</span><span class="price">$13.000</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Embotelladas y listas para llevar</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">1365 COCA COLA</span><span class="price">$6.000</span></div>
+          <div class="item"><span class="name">600ML AGUA BRISA</span><span class="price">$2.500</span></div>
+          <div class="item"><span class="name">Agua Botella</span><span class="price">$3.000</span></div>
+          <div class="item"><span class="name">AGUA BRISA LITRO</span><span class="price">$3.000</span></div>
+          <div class="item"><span class="name">AGUA PEQUEÑA</span><span class="price">$2.500</span></div>
+          <div class="item"><span class="name">COCACOLA 400 ML</span><span class="price">$3.500</span></div>
+          <div class="item"><span class="name">FUZE TEA</span><span class="price">$4.000</span></div>
+          <div class="item"><span class="name">MONSTER</span><span class="price">$9.000</span></div>
+          <div class="item"><span class="name">POWER RADE</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">POWERADE 500 ML</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">SUERO FLASHLYTE</span><span class="price">$6.500</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page3">
+      <div class="hero">
+        <img src="https://images.unsplash.com/photo-1579722821273-0f6c09b7e4b6?auto=format&fit=crop&w=1400&q=80" alt="Proteína y batidos">
+        <div class="hero-text">
+          <h2>💪 Batidos, proteína y suplementación</h2>
+          <p>Aquí van tanto los batidos preparados como los scoops, adiciones y suplementos completos, tal como lo pidió el cliente.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Batidos y adiciones</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">ADICION DE  LECHE</span><span class="price">$1.000</span></div>
+          <div class="item"><span class="name">C4 LATA</span><span class="price">$15.000</span></div>
+          <div class="item"><span class="name">EN LECHE</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">EN LECHE DE ALMENDRAS</span><span class="price">$2.000</span></div>
+          <div class="item"><span class="name">MAS SCOP AVENA</span><span class="price">$1.000</span></div>
+          <div class="item"><span class="name">PROTEÍNA IMPORTADA EN AGUA</span><span class="price">$15.000</span></div>
+          <div class="item"><span class="name">SCOOP DE CREATINA</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">SCOOP DE PREENTRENO</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">SCOOP DE PROTEÍNA</span><span class="price">$7.000</span></div>
+        </div>
+
+        <div class="section-subtitle">Suplementos completos</div>
+        <div class="menu-list">
+          <div class="item"><span class="name">CREATINA HELTY SPORT 130 mil</span><span class="price">$130.000</span></div>
+          <div class="item"><span class="name">CREATINA MUSCLETECH 150</span><span class="price">$150.000</span></div>
+          <div class="item"><span class="name">INTENZE 130mil</span><span class="price">$130.000</span></div>
+          <div class="item"><span class="name">ISO 100 2 LIBRAS</span><span class="price">$220.000</span></div>
+          <div class="item"><span class="name">OMEGA COMPLETO</span><span class="price">$60.000</span></div>
+          <div class="item"><span class="name">PASE 110 MIL</span><span class="price">$110.000</span></div>
+          <div class="item"><span class="name">PSICOTIC</span><span class="price">$200.000</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page4">
+      <div class="hero">
+        <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=1400&q=80" alt="Pastelería y salados">
+        <div class="hero-text">
+          <h2>🥐 Pastelería, panes y salados</h2>
+          <p>Incluye hojaldres, panes de masa madre, focaccia, sánduches, pasteles salados y también los combos para no dejar ningún producto fuera.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Croissants, hojaldres y panes</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">CROASANN BOCADILLO Y QUESO</span><span class="price">$6.000</span></div>
+          <div class="item"><span class="name">CROISANT QUESO Y JAMON</span><span class="price">$6.000</span></div>
+          <div class="item"><span class="name">CROISANT SENCILLO</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">CROISSANT DE ALMENDRAS</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">CROISSANT DE CHOCOALMENDRA</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">CROSISANT QUESO Y BOCADILLO</span><span class="price">$6.000</span></div>
+          <div class="item"><span class="name">DEDITO CHEDDAR</span><span class="price">$6.000</span></div>
+          <div class="item"><span class="name">FOCACCIA</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">PAN 3 QUESOS AHUMADOS</span><span class="price">$20.000</span></div>
+          <div class="item"><span class="name">PAN km SEMILLAS</span><span class="price">$18.000</span></div>
+          <div class="item"><span class="name">PAN mm FOCACHA</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">PAN MM SOLO</span><span class="price">$16.000</span></div>
+        </div>
+
+        <div class="section-subtitle">Pasteles salados</div>
+        <div class="menu-list">
+          <div class="item"><span class="name">PASTEL CARNE BOLOÑESA</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">PASTEL DE CARNE</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">PASTEL DE POLLO</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">PASTEL DE POLLO BECHAMEL</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">PASTEL ESPINACA</span><span class="price">$7.000</span></div>
+          <div class="item"><span class="name">PASTEL NAPOLITANO</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">PASTEL SANTARROSANO</span><span class="price">$8.000</span></div>
+          <div class="item"><span class="name">pasteles de carne de pollo y chorizo</span><span class="price">$650.000</span></div>
+          <div class="item"><span class="name">PASTELES DE CARNE POLLO</span><span class="price">$6.500</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Sánduches y combos</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">COMBO 15k</span><span class="price">$15.000</span></div>
+          <div class="item"><span class="name">COMBOS 13000</span><span class="price">$13.000</span></div>
+          <div class="item"><span class="name">GABY COMBO</span><span class="price">$15.000</span></div>
+          <div class="item"><span class="name">MIXTO</span><span class="price">$18.000</span></div>
+          <div class="item"><span class="name">SANDUCHE DE ATUN</span><span class="price">$18.000</span></div>
+          <div class="item"><span class="name">SÁNDUCHE DE CARNE</span><span class="price">$16.000</span></div>
+          <div class="item"><span class="name">SÁNDUCHE DE JAMÓN Y QUESO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">SÁNDUCHE DE POLLO</span><span class="price">$16.000</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page5">
+      <div class="hero">
+        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1400&q=80" alt="Tortas y postres">
+        <div class="hero-text">
+          <h2>🍰 Tortas y postres</h2>
+          <p>Cheesecakes, tortas fit, galletas, postres individuales y referencias dulces completas en una sola vista.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Postres y cheesecakes</h3>
+        <div class="menu-list">
+          <div class="item"><span class="name">ARÁNDANOS GALLETA</span><span class="price">$5.000</span></div>
+          <div class="item"><span class="name">CHEESECAKE FIT</span><span class="price">$12.000</span></div>
+          <div class="item"><span class="name">CHEESECASE FRUTOS AMARILLOS</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">CHEESECASE FRUTOS ROJOS</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">CHEESECASE MATCHA</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">CHESSCARE OREO</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">CHOCOLATE AL 75</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">GALLETA AVENA</span><span class="price">$4.500</span></div>
+          <div class="item"><span class="name">GALLETA CHIPS DE CHOCOLATE</span><span class="price">$4.500</span></div>
+          <div class="item"><span class="name">POSTRE SALUDABLE</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">TIRAMISU</span><span class="price">$6.000</span></div>
+        </div>
+
+        <div class="section-subtitle">Tortas</div>
+        <div class="menu-list">
+          <div class="item"><span class="name">TORTA AMAPOLA</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">TORTA DE ALMOJABANA</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">TORTA DE BANANO</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">TORTA DE CHOCOLATE</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">TORTA DE CHOCOLATE FIT</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">TORTA DE NARANJA CON SEMILLAS DE AMAPOLA</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">TORTA DE ZANAHORIA FIT</span><span class="price">$10.000</span></div>
+          <div class="item"><span class="name">TORTA RED V</span><span class="price">$8.500</span></div>
+          <div class="item"><span class="name">TORTA ZANAHORIA</span><span class="price">$8.500</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page6">
+      <div class="hero">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80" alt="Carta completa">
+        <div class="hero-text">
+          <h2>📋 Todo el menú</h2>
+          <p>Vista general resumida por categoría para revisar de un solo golpe que no falte ninguna referencia de la lista compartida.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="section-title">Resumen por categorías</h3>
+        <p class="note">Esta página sirve como control visual. Las referencias completas están distribuidas arriba en Calientes, Frías, Proteína, Pastelería y Tortas.</p>
+        <div class="section-subtitle">Cantidad de bloques</div>
+        <div class="menu-list">
+          <div class="item"><span class="name">Calientes: filtrados, cappuccinos saborizados, cafés clásicos, tés y combos calientes</span><span class="price">Completado</span></div>
+          <div class="item"><span class="name">Frías: barra fría, embotelladas, energéticas e hidratación</span><span class="price">Completado</span></div>
+          <div class="item"><span class="name">Proteína: batidos, adiciones, scoops y suplementos</span><span class="price">Completado</span></div>
+          <div class="item"><span class="name">Pastelería: croissants, focaccia, panes, pasteles salados, sánduches y combos</span><span class="price">Completado</span></div>
+          <div class="item"><span class="name">Tortas: cheesecakes, galletas, postres y línea fit</span><span class="price">Completado</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function showPage(n, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + n).classList.add('active');
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active-btn'));
+      if (btn) btn.classList.add('active-btn');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
